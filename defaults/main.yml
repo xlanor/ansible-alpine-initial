@@ -13,16 +13,17 @@ iserver_lock_root: False
 ### BASE PACKAGES ###
 
 iserver_alpine_repos:
-  ## Alpine 3.11 example
-  - 'http://nl.alpinelinux.org/alpine/v3.11/main'
-  - 'http://nl.alpinelinux.org/alpine/v3.11/community'
-  - '@edge http://nl.alpinelinux.org/alpine/edge/main'
-  - '@testing http://nl.alpinelinux.org/alpine/edge/testing'
-  - '@edgecommunity http://dl-cdn.alpinelinux.org/alpine/edge/community'
+  - 'http://download.nus.edu.sg/mirror/alpine/v3.12/main'
+  - 'http://download.nus.edu.sg/mirror/alpine/v3.12/community'
+  - '@edge http://download.nus.edu.sg/mirror/alpine/edge/main'
+  - '@testing http://download.nus.edu.sg/mirror/alpine/edge/testing'
+  - '@edgecommunity http://download.nus.edu.sg/mirror/alpine/edge/community'
+
 
 # packages to install on every Alpine server
 iserver_alpine_packages:
   - openssh # needed for Travis testing
+  - vim
   - qemu-guest-agent@edgecommunity # needed by packer
   - sudo    # required
   - shadow  # required for adduser with Ansible
@@ -48,7 +49,7 @@ iserver_host_main_ip: 127.1.1.1
 iserver_ip: 127.0.1.1
 # use slash notation /24 for 255.255.255.0 or /32 for 255.255.255.255
 iserver_netmask: "/32"
-iserver_nameservers: 1.1.1.1,1.0.0.1
+iserver_nameservers: 192.168.1.30,1.1.1.1
 
 ### SSH ###
 iserver_ssh_port: 22
@@ -65,14 +66,14 @@ iserver_alpine_root_profile: |
   export LS_OPTIONS='--color=auto'
   eval "`dircolors`"
   alias ls='ls $LS_OPTIONS'
-  export EDITOR=/usr/bin/nano
+  export EDITOR=/usr/bin/vim
 
 iserver_alpine_user_profile: |
   export PS1="\[\033[1;34m\][\u@\h:\w]$\[\033[0m\] "
   export LS_OPTIONS='--color=auto'
   eval "`dircolors`"
   alias ls='ls $LS_OPTIONS'
-  export EDITOR=/usr/bin/nano
+  export EDITOR=/usr/bin/vim
 
 # motd
 iserver_motd_welcome: |
