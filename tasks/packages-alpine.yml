@@ -1,0 +1,31 @@
+### BASE PACKAGES ###
+# Alpine
+
+- name: Move original /etc/apk/repositories to back it up (once).
+  command: mv /etc/apk/repositories /etc/apk/repositories.original
+  args:
+    creates: /etc/apk/repositories.original
+
+- name: Add a set of specified repos into /etc/apk/repositories.
+  lineinfile:
+    path: /etc/apk/repositories
+    state: present
+    create: yes
+    regexp: "^{{ item }}"
+    line: "{{ item }}"
+  loop: "{{ iserver_alpine_repos }}"
+
+- name: Ensure that all packages are updated.
+  apk:
+    update_cache: yes
+  changed_when: False
+
+- name: Ensure that all packages are upgraded.
+  apk:
+    upgrade: yes
+  changed_when: False
+
+- name: Ensure that initial packages are installed.
+  apk:
+    name: "{{ iserver_alpine_packages }}"
+    state: present

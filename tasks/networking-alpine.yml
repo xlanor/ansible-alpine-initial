@@ -1,0 +1,17 @@
+### NETWORKING ###
+# Alpine
+
+- name: Copy script that runs when the network comes up to display IP and SSH fingerprint before login.
+  template:
+    src: show-ip-address-alpine.sh.j2
+    dest: /etc/network/if-up.d/show-ip-address
+    mode: a+x
+
+# TODO test Set fixed IP via network/interfaces in Alpine
+- name: Set fixed IP via network/interfaces.
+  template:
+    src: network-interfaces.j2
+    dest: /etc/network/interfaces
+  when: iserver_static_ip | bool
+  tags:
+    - vanilla

@@ -1,0 +1,17 @@
+# SSH-HOST-KEYGEN (for KVM template)
+# Alpine
+
+- name: Copy script for OpenSSH Server Key Generation.
+  copy:
+    src: ssh-host-keygen-alpine.start
+    dest: /etc/local.d/02_ssh-host-keygen.start
+    mode: a+x
+  register: enable_ssh_host_keygen
+  notify:
+    - Activate Autostart
+
+- name: Create a file so that ssh-host-keygen will run once.
+  file:
+    path: /etc/run-ssh-host-keygen-once
+    state: touch
+  when: enable_ssh_host_keygen is changed
