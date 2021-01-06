@@ -5,18 +5,6 @@
 ## - check if it works with a manual default Ubuntu 18.04 ISO live-server install (probably using 'su' is not needed)
 ## - use Ansible handlers for restarting all services (instaed of restarting inline, partially done)
 
-- name: Initial Setup - Debian, Ubuntu.
-  import_tasks: initial-setup-debian-ubuntu.yml
-  when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
-  tags:
-    - debuntu
-
-- name: Initial Setup - OpenBSD.
-  import_tasks: initial-setup-openbsd.yml
-  when: ansible_distribution == 'OpenBSD'
-  tags:
-    - openbsd
-
 - name: Initial Setup - Alpine.
   import_tasks: initial-setup-alpine.yml
   when: ansible_distribution == 'Alpine'
